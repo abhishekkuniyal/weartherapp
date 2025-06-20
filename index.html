@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Weather app</title>
+</head>
+
+<body class="bg-black font-inter">
+    <div id="card" class="bg-linear-to-r from-cyan-500 to-blue-500 h-110 w-80  my-20 rounded-xl  mx-auto relative ">
+
+
+        <div class="relative flex justify-center  items-center space-x-2 ">
+            <input id="search" type="text"
+                class="bg-teal-50 h-10  rounded-4xl  mt-7 text-sm pl-7 hover:border-1 hover:border-black text-black"
+                placeholder="Enter city name ">
+
+            <div class="bg-teal-50 h-10 mt-7 rounded-full hover:border-1 hover:border-black">
+
+                <button id="button">
+                    <img class=" w-10 p-4" src="search.png" alt="">
+
+                </button>
+
+            </div>
+
+        </div>
+        
+        
+<div id ="checkweather" >
+        <div  class=" grid justify-center items-center text-center  text-white font-nomral">
+            <img  id="weather" width="100px" class="mt-5 flex mx-auto " src="mist.png" alt="">
+            <p1 id="temp" class="text-6xl mt-3" >22</p1>
+            <p2 id="city" class="text-3xl mt-3"> New York</p2>
+
+        </div>
+
+        <div class="text-white ml-10 mt-10  relative ">
+            <div id="humidity " class="flex space-x-2 absolute text-lg items-center ">
+                <img  src="humidity.png" alt="humidity" class="h-5 ">
+                <p1 id="humidity">64%</p1>
+            </div>
+             <p2 " class="absolute text-sm  ml-7 mt-7 font-light">Humidity</p2>
+         
+
+            <div  class=" flex space-x-1 absolute ml-45 justify-self-end items-center text-lg ">
+                <img class="h-6 relative fill-white" src="wind.png" alt="">
+                <p id="wind">18</p>
+                <br>
+               
+            </div>
+             <p class="absolute text-sm  ml-45 mt-7 font-light">Wind Speed</p>
+        </div>
+</div>
+
+    </div>
+
+  <script>
+const apiKey = '4a94bbec97aec84f9e87c12c305f843d';
+const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+const search  = document.querySelector('#search');
+const button  = document.querySelector('#button');
+const picture = document.querySelector("#weather");
+
+async function checkWeather(city) {
+        const response = await fetch(apiUrl+ city +`&appid=${apiKey}`);
+        const data = await response.json();
+       
+      
+    document.querySelector('#city').innerHTML= (data.name);
+    document.querySelector('#temp').innerHTML= Math.round(data.main.temp)+"°c";
+    document.querySelector('#humidity').innerHTML= (data.main.humidity)+" %";
+    document.querySelector('#wind').innerHTML= Math.round(data.wind.speed)+" km/h";
+
+    if (data.weather[0].main=="Clouds"){
+    picture.src="clouds.png"
+   }
+   else if
+    (data.weather[0].main =="Clear"){
+    picture.src="clear.png"
+   }
+   else if
+    (data.weather[0].main =="Mist"){
+    picture.src="Mist.png"
+   }
+   else if
+    (data.weather[0].main =="Drizzle"){
+    picture.src="Drizzle.png"
+   }
+   else if
+    (data.weather[0].main =="Snow"){
+    picture.src="snow.png"
+   }
+   else if
+    (data.weather[0].main =="Rain"){
+    picture.src="Rain.png"
+   }
+
+     document.querySelector("#checkweather").style.display="block";
+} 
+
+
+
+
+button.addEventListener('click',()=> {
+checkWeather(search.value);
+})
+
+
+    </script>
+
+
+</body>
+
+</html>
